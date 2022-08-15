@@ -141,7 +141,7 @@ const nroCPUs = os.cpus().length;
 
 
 if (MODO !== 'FORK' && MODO !== 'CLUSTER') {
-    throw new Error(`MODO: "${MODO}" no implementado, use "FORK" o "CLUSTER"`);
+	new Error(loggerError.log("error", `Modo ${MODO} no implementado, usando FORK`));
 };
 
 if(MODO === 'CLUSTER' && cluster.isPrimary) {
