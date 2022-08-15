@@ -9,10 +9,10 @@ const getRandomNumbers = (cant) => {
     return resultados;
 };
 
-process.on("message", (cantidad) => {
-  const result = getRandomNumbers(cantidad);
-  process.send(result);
-});
+// process.on("message", (cantidad) => {
+//   const result = getRandomNumbers(cantidad);
+//   process.send(result);
+// });
 
 
 module.exports = { getRandomNumbers };

@@ -25,7 +25,7 @@ const os = require('os');
 
 
 const routerAll = require('./src/routes/router.js')
-const routerRandomNums = require('./src/routes/forked/fork-random-nums.js');
+const routerRandomNums = require('./src/routes/randoms/fork-random-nums.js');
 const routerInfo = require('./src/routes/info.js');
 const compression = require('compression');
 const { logger, loggerWarn, loggerError } = require('./src/utils/winston.js');
