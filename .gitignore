@@ -4,3 +4,4 @@ nginx-1.23.1.zip
 nginx-1.23.1
 /nginx-1.23.1
 src/utils/winston_logs
+/src/utils/winston_logs/*
