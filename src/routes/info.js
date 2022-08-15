@@ -28,7 +28,7 @@ routerInfo.get('/', (req, res) => {
         numProcesadores: os.cpus().length, // "Número de procesadores": os.cpus().length,
         PORT: PORT,
     };
-    console.log(infoProyecto);
+    // console.log(infoProyecto);
     res.render('info', { title: "Info" , infoProyecto});
 });
 
