@@ -29,8 +29,8 @@ const routerRandomNums = require('./src/routes/forked/fork-random-nums.js');
 const routerInfo = require('./src/routes/info.js');
 const compression = require('compression');
 const { logger, loggerWarn, loggerError } = require('./src/utils/winston.js');
-const routerMensajes = require('./src/routes/mensajes.js');
-const routerProductos = require('./src/routes/productos.js');
+const routerMensajes = require('./src/routes/router.mensajes.js');
+const routerProductos = require('./src/routes/router.productos.js');
 
 
 const app = express();
@@ -76,7 +76,7 @@ app.use(
 	})
 );
 
-//logger Rutas y metodos de la API
+//logger info, rutas y metodos
 app.use((req, _, next) => {
 	logger.log("info", `Ruta: ${req.originalUrl} y Metodo: ${req.method} solicitado`);
 	return next();
@@ -96,11 +96,6 @@ app.use('/api/randoms', routerRandomNums);
 
 
 ioServer.on("connection", async (socket) => {
-	app.use((req, _, next) => {
-		logger.log("info", `Ruta: ${req.originalUrl} y Metodo: ${req.method} solicitado`);
-		return next();
-	});
-	
 	logger.log("info", `Nuevo usuario conectado`);
 	
 	socket.emit("messages", allNormalizeProcess(await mensajes.getAll()));
@@ -124,13 +119,13 @@ ioServer.on("connection", async (socket) => {
 
 
 
-// Ataja los errores de passport
+// Ataja errores, logger Errores
 app.use((error, req, res, next) => {
 	loggerError.log("error", error);
 	res.status(500).send(error.message);
 });
 
-// Rutas inexistentes
+// Rutas inexistentes, logger Warnings
 app.use((req, res) => {
 	loggerWarn.log("warn", `Ruta ${req.originalUrl} y metodo ${req.method} no implementada`)
 	res.status(404).send({
