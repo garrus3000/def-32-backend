@@ -250,5 +250,46 @@
     },
     "text": "Test",
     "id_text": 18
+  },
+  {
+    "id": 19,
+    "author": {
+      "email": "asd@asdf.com",
+      "nombre": "Eduardo",
+      "apellido": "Odriozola",
+      "edad": "35",
+      "alias": "AAAAA",
+      "avatar": "https://yerbamateargentina.org.ar/imagenes/archivos/noticias/79288_imagen_1227x747xrecortarxagrandar.jpg?random=1608575522",
+      "fecha": "13/8/2022, 23:19:53"
+    },
+    "text": "otro test",
+    "id_text": 19
+  },
+  {
+    "id": 21,
+    "author": {
+      "email": "asd@asdf.com",
+      "nombre": "Eduardo",
+      "apellido": "Odriozola",
+      "edad": "35",
+      "alias": "AAAAA",
+      "avatar": "https://yerbamateargentina.org.ar/imagenes/archivos/noticias/79288_imagen_1227x747xrecortarxagrandar.jpg?random=1608575522",
+      "fecha": "14/8/2022, 19:22:14"
+    },
+    "id_text": 21
+  },
+  {
+    "id": 21,
+    "author": {
+      "email": "asd@asdf.com",
+      "nombre": "Eduardo",
+      "apellido": "Odriozola",
+      "edad": "35",
+      "alias": "AAAAA",
+      "avatar": "https://yerbamateargentina.org.ar/imagenes/archivos/noticias/79288_imagen_1227x747xrecortarxagrandar.jpg?random=1608575522",
+      "fecha": "14/8/2022, 19:24:46"
+    },
+    "text": "probando",
+    "id_text": 21
   }
 ]

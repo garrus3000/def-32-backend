@@ -6,8 +6,9 @@ const { Server: IOServer } = require('socket.io');
 
 const { engine } = require('express-handlebars');
 
-const routerProducto = require('./src/routes/routes-faker-productos.js');
+const fakerRouterProds = require('./src/mocks/router-fakerRouterProds.js');
 const ContenedorMensajes = require('./src/controllers/contenedorMensajes.js');
+const ContenedorProductos = require('./src/controllers/contenedorProductos.js');
 
 
 const {allNormalizeProcess} = require('./src/controllers/normalizr.js');
@@ -27,6 +28,9 @@ const routerAll = require('./src/routes/router.js')
 const routerRandomNums = require('./src/routes/forked/fork-random-nums.js');
 const routerInfo = require('./src/routes/info.js');
 const compression = require('compression');
+const { logger, loggerWarn, loggerError } = require('./src/utils/winston.js');
+const routerMensajes = require('./src/routes/mensajes.js');
+const routerProductos = require('./src/routes/productos.js');
 
 
 const app = express();
@@ -34,6 +38,7 @@ const httpServer = new HttpServer(app)
 const ioServer = new IOServer(httpServer)
 
 const mensajes = new ContenedorMensajes('./src/DB/mensajes.json');
+const productos = new ContenedorProductos('./src/DB/productos.json');
 
 app.use(compression())
 
@@ -71,19 +76,32 @@ app.use(
 	})
 );
 
+//logger Rutas y metodos de la API
+app.use((req, _, next) => {
+	logger.log("info", `Ruta: ${req.originalUrl} y Metodo: ${req.method} solicitado`);
+	return next();
+});
 
-app.use('/api', routerProducto)
+app.use( routerMensajes);
+
+app.use( routerProductos);
+
+app.use('/api', fakerRouterProds);
 
 app.use(routerAll);
 
 app.use('/info', routerInfo);
 
-
 app.use('/api/randoms', routerRandomNums);
 
 
 ioServer.on("connection", async (socket) => {
-	console.log("Nuevo usuario conectado");
+	app.use((req, _, next) => {
+		logger.log("info", `Ruta: ${req.originalUrl} y Metodo: ${req.method} solicitado`);
+		return next();
+	});
+	
+	logger.log("info", `Nuevo usuario conectado`);
 	
 	socket.emit("messages", allNormalizeProcess(await mensajes.getAll()));
   
@@ -95,15 +113,26 @@ ioServer.on("connection", async (socket) => {
 				allNormalizeProcess(await mensajes.getAll())
 			);
 	});
+
+	socket.emit("productos", await productos.getAll());
+
+    socket.on("agregarProducto", async (producto) => {
+        await productos.save(producto);
+        ioServer.sockets.emit("productos", await productos.getAll());
+    });
 });
+
 
 
 // Ataja los errores de passport
 app.use((error, req, res, next) => {
+	loggerError.log("error", error);
 	res.status(500).send(error.message);
 });
 
+// Rutas inexistentes
 app.use((req, res) => {
+	loggerWarn.log("warn", `Ruta ${req.originalUrl} y metodo ${req.method} no implementada`)
 	res.status(404).send({
 		error: -2,
 		descripcion: `ruta ${req.originalUrl} y metodo ${req.method} no implementada`,
@@ -117,25 +146,25 @@ const nroCPUs = os.cpus().length;
 
 
 if (MODO !== 'FORK' && MODO !== 'CLUSTER') {
-    throw new Error(`MODO: ${MODO} no implementado, use "FORK" o "CLUSTER"`);
+    throw new Error(`MODO: "${MODO}" no implementado, use "FORK" o "CLUSTER"`);
 };
 
-if (MODO == 'CLUSTER') {
-    if (cluster.isPrimary) {
-        for (let i = 0; i < nroCPUs; i++) {
-            cluster.fork()
-        }
-		console.log(`Primary PID: ${process.pid} - PORT: ${PORT} - MODO: ${MODO} - isPrimary: ${cluster.isPrimary} - Number of CPUs: ${nroCPUs}\n`);
-		cluster.on("online", (worker) => { console.log(`Worker PID: ${worker.process.pid} is alive!`);});
-    	cluster.on("exit", (worker) => { console.log(`Worker ${worker.process.pid} died`);});
-    } else {
-        httpServer.listen(PORT, () => { console.log(`Escuchando en el Puerto: ${httpServer.address().port} - MODO: ${MODO} - Worker: ${cluster.worker.id} - Wk_PID: ${cluster.worker.process.pid}`);});
-        httpServer.on("error", (error) => console.error("Error de conexión", error));
-    }
-};
-if (MODO == 'FORK'){
+if(MODO === 'CLUSTER' && cluster.isPrimary) {
+	for(let i = 0; i < nroCPUs; i++){
+		cluster.fork();
+	}
+	cluster.on('online', (worker) => {
+		logger.log('info', `Worker PID: ${worker.process.pid} is alive`);
+	} );
+	cluster.on('exit', (worker) => {
+		logger.log("warn", `Worker PID: ${worker.process.pid} died`);
+	} );
+} else {
 	httpServer.listen(PORT, () => {
-		console.log(`Escuchando en el Puerto: ${httpServer.address().port} - MODO: ${MODO} - PID: ${process.pid}`);
-	});
-	httpServer.on("error", (error) => console.error(error, "Error de conexión"));
+		logger.log(
+            "info",
+            `Escuchando en el Puerto: ${httpServer.address().port} - MODO: ${MODO} - PID: ${process.pid} - fyh: ${new Date().toLocaleString()}`
+        );
+	} );
+	httpServer.on("error", (error) => loggerError.log("error", error));
 };

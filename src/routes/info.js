@@ -30,7 +30,7 @@ routerInfo.get('/', (req, res) => {
     };
     // res.send(infoProyecto);
     // console.log(info);
-    res.render('info', { infoProyecto });
+    res.render('info', { title: "Info" , infoProyecto});
 });
 
 

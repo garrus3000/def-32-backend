@@ -1,4 +1,6 @@
-<h2 class="text-center mt-3 mb-3 text-primary">Lista de Productos <span class="text-secondary fs-4">(Music Albums)</span></h2>
+<title>{{title}}</title>
+
+<h2 class="text-center mt-3 mb-3 text-primary">Mock Productos <span class="text-secondary fs-4">(Music Albums)</span></h2>
 {{#if productos }}
 <section class="container">
     <table class="table border-dark table-light table-striped">
@@ -8,7 +10,6 @@
                 <th scope="col">Nombre</th>
                 <th scope="col">Precio</th>
                 <th scope="col" >Foto</th>
-                <th scope="col">Detalles</th>
                 <th scope="col" >Stock</th>
             </tr>
         </thead>
@@ -19,7 +20,6 @@
                 <td>{{ this.nombre }}</td>
                 <td>${{ this.precio }}</td>
                 <td><img src="{{this.foto}}" width="150"></td>
-                <td>{{ this.descripcion }}</td>
                 <td>{{this.stock}}</td>
             </tr>
             {{/each}}

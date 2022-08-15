@@ -1,0 +1,8 @@
+{"body":"{\n  \"email\": \"asd@asdf.com\",\n  \"nombre\": \"Eduardo\",\n  \"apellido\": \"Odriozola\",\n  \"edad\": \"35\",\n  \"alias\": \"AAAAA\",\n  \"avatar\": \"https://yerbamateargentina.org.ar/imagenes/archivos/noticias/79288_imagen_1227x747xrecortarxagrandar.jpg?random=1608575522\",\n}","expose":true,"level":"error","status":400,"statusCode":400,"type":"entity.parse.failed"}
+{"body":"{\n  \"email\": \"asd@asdf.com\",\n  \"nombre\": \"Eduardo\",\n  \"apellido\": \"Odriozola\",\n  \"edad\": \"35\",\n  \"alias\": \"AAAAA\",\n  \"avatar\": \"https://yerbamateargentina.org.ar/imagenes/archivos/noticias/79288_imagen_1227x747xrecortarxagrandar.jpg?random=1608575522\",\n}","expose":true,"level":"error","status":400,"statusCode":400,"type":"entity.parse.failed"}
+{"level":"error","message":"Error Metodo: GET No existe el mensaje con id 22"}
+{"level":"error","message":"Error Metodo: DELETE No existe el mensaje con id 22"}
+{"level":"error","message":"Error Metodo: GET No existe el producto con id 10"}
+{"level":"error","message":"Error Metodo: GET No existe el mensaje con id 234"}
+{"level":"error","message":"Error Metodo: GET No existe el producto con id 9"}
+{"level":"error","message":"Error Metodo: GET No existe el producto con id 8"}
