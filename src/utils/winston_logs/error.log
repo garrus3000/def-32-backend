@@ -7,3 +7,4 @@
 {"level":"error","message":"Error Metodo: GET No existe el producto con id 9"}
 {"level":"error","message":"Error Metodo: GET No existe el producto con id 8"}
 {"level":"error","message":"Modo asd no implementado, usando FORK"}
+{"level":"error","message":"Error Metodo: GET Mensaje 344 no existe"}
