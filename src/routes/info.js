@@ -22,14 +22,13 @@ routerInfo.get('/', (req, res) => {
         plataforma: process.platform, // "Nombre de la plataforma": process.platform,
         versionNode: process.version, // "Versión de Node.js": process.version,
         pathEjecucion: process.execPath, // "Path de ejecución": process.execPath,
-        memoriaTotalReservada: process.memoryUsage().rss, // "Memoria total de reservada": process.memoryUsage().rss,
+        memoriaTotalReservada: Math.floor(process.memoryUsage().rss / (1024 * 1024)), // "Memoria total de reservada": process.memoryUsage().rss,
         processId: process.pid, // "Process ID": process.pid,
         directorioActualTrabajo: process.cwd(), // "Directorio actual del trabajo": process.cwd(),
         numProcesadores: os.cpus().length, // "Número de procesadores": os.cpus().length,
         PORT: PORT,
     };
-    // res.send(infoProyecto);
-    // console.log(info);
+    console.log(infoProyecto);
     res.render('info', { title: "Info" , infoProyecto});
 });
 
