@@ -1,16 +1,30 @@
 const winston = require("winston");
 
+
+
 const logger = winston.createLogger({
-    //consola
     level: "info",
-    transports: [new winston.transports.Console({ level: "info" })],
+    transports: [
+        new winston.transports.Console({
+            level: "info",
+            format: winston.format.combine(
+                winston.format.colorize(),
+                winston.format.simple()
+            ),
+        }),
+    ],
 });
 
 const loggerWarn = winston.createLogger({
-    //Log advertencias
     level: "warn",
     transports: [
-        new winston.transports.Console({ level: "warn" }),
+        new winston.transports.Console({
+            level: "warn",
+            format: winston.format.combine(
+                winston.format.colorize(),
+                winston.format.simple()
+            ),
+        }),
         new winston.transports.File({
             filename: "src/utils/winston_logs/warn.log",
             level: "warn",
@@ -19,10 +33,15 @@ const loggerWarn = winston.createLogger({
 });
 
 const loggerError = winston.createLogger({
-    //Archivo error
     level: "error",
     transports: [
-        new winston.transports.Console({ level: "error" }),
+        new winston.transports.Console({
+            level: "error",
+            format: winston.format.combine(
+                winston.format.colorize(),
+                winston.format.simple()
+            ),
+        }),
         new winston.transports.File({
             filename: "src/utils/winston_logs/error.log",
             level: "error",

@@ -127,7 +127,7 @@ app.use((error, req, res, next) => {
 
 // Rutas inexistentes, logger Warnings
 app.use((req, res) => {
-	loggerWarn.log("warn", `Ruta ${req.originalUrl} y metodo ${req.method} no implementada`)
+	loggerWarn.log("warn", `Ruta ${req.originalUrl} y metodo ${req.method} no implementada - fyh: ${new Date().toLocaleString()} `)
 	res.status(404).send({
 		error: -2,
 		descripcion: `ruta ${req.originalUrl} y metodo ${req.method} no implementada`,
